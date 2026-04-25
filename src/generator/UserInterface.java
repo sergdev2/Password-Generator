@@ -87,7 +87,7 @@ public class UserInterface extends JFrame {
             generator.generatePassword(12);
             resultLabel.setForeground(Color.GREEN);
             resultLabel.setText(generator.getPassword());
-            resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
+            resultLabel.setFont(new Font("Arial", Font.BOLD, 30));
 
         });
 
@@ -99,11 +99,11 @@ public class UserInterface extends JFrame {
             String inputPassword = passwordField.getText();
             if (generator.verifyPassword(inputPassword)) {
                 resultLabel.setForeground(Color.GREEN);
-                resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
+                resultLabel.setFont(new Font("Arial", Font.BOLD, 30));
                 resultLabel.setText("Password is valid");
             } else {
                 resultLabel.setForeground(Color.RED);
-                resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
+                resultLabel.setFont(new Font("Arial", Font.BOLD, 30));
                 resultLabel.setText("Password is invalid");
             }
         });
@@ -120,4 +120,5 @@ public class UserInterface extends JFrame {
 
         southPanel.add(resultLabel);
     }
+    
 }
