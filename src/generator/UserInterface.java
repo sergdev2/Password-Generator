@@ -13,8 +13,12 @@ public class UserInterface extends JFrame {
     // Font size constants to avoid magic numbers and ease future maintenance
 
     private final JPanel northPanel, centerPanel, southPanel;
+    private JTextField passwordField;
+    private JLabel resultLabel;
+    private final GeneratorPassword generator;
 
     public UserInterface() {
+        generator = new GeneratorPassword();
         setTitle("Password Generator");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +64,8 @@ public class UserInterface extends JFrame {
     }
 
     public void createTextField() {
-        JTextField passwordField = new JTextField(20);
+        passwordField = new JTextField(20);
+        passwordField.setPreferredSize(new Dimension(150, 30));
         northPanel.add(passwordField);
     }
     public void secondLabel() {
@@ -78,18 +83,37 @@ public class UserInterface extends JFrame {
         button.setBounds(10, 50, 10, 10);
         button.setBackground(new Color(123, 0, 153, 255));
         button.setForeground(Color.WHITE);
+        button.addActionListener(e -> {
+            generator.generatePassword(12);
+            resultLabel.setForeground(Color.GREEN);
+            resultLabel.setText(generator.getPassword());
+            resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
+
+        });
 
         JButton button2 = new JButton("Verify");
         button2.setAlignmentX(CENTER_ALIGNMENT);
         button2.setBounds(10, 50, 10, 10);
         button2.setBackground(new Color(123, 153, 0, 255));
+        button2.addActionListener((actionEvent) -> {
+            String inputPassword = passwordField.getText();
+            if (generator.verifyPassword(inputPassword)) {
+                resultLabel.setForeground(Color.GREEN);
+                resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
+                resultLabel.setText("Password is valid");
+            } else {
+                resultLabel.setForeground(Color.RED);
+                resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
+                resultLabel.setText("Password is invalid");
+            }
+        });
 
         centerPanel.add(button);
         centerPanel.add(button2);
     }
 
     public void resultLabel() {
-        JLabel resultLabel = new JLabel("Generated Password: ", SwingConstants.CENTER);
+        resultLabel = new JLabel("Generated Password: ", SwingConstants.CENTER);
         resultLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         resultLabel.setAlignmentX(CENTER_ALIGNMENT);
         resultLabel.setBounds(10, 30, 10, 10);
